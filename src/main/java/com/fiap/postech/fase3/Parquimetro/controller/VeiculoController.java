@@ -1,8 +1,11 @@
 package com.fiap.postech.fase3.Parquimetro.controller;
 
+import com.fiap.postech.fase3.Parquimetro.model.Estacionamento;
 import com.fiap.postech.fase3.Parquimetro.model.Veiculo;
 import com.fiap.postech.fase3.Parquimetro.repository.VeiculoRepository;
+import com.fiap.postech.fase3.Parquimetro.service.EstacionamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,4 +40,5 @@ public class VeiculoController {
                                  @RequestBody Veiculo veiculo){
         return veiculoRepository.update(id, veiculo);
     }
+
 }

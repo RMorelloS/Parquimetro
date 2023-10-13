@@ -14,25 +14,6 @@ public class VeiculoService {
     @Autowired
     public VeiculoRepository veiculoRepository;
 
-    @Autowired
-    public CondutorVeiculoService condutorVeiculoService;
-
-    @Autowired
-    public CondutorService condutorService;
-    public Veiculo save(Veiculo veiculo, String condutor_CPF) {
-        try {
-            Condutor condutorBusca = condutorService.verificaCondutor(condutor_CPF);
-            condutorVeiculoService.saveCondutorVeiculo(veiculo, condutorBusca);
-            return veiculoRepository.save(veiculo, condutor_CPF);
-        }catch(Exception e){
-            throw e;
-        }
-    }
-
-    public Veiculo getVeiculoById(String id) {
-        return veiculoRepository.getVeiculoById(id);
-    }
-
     public List<Veiculo> getVeiculos() {
         return veiculoRepository.getVeiculos();
     }

@@ -16,17 +16,5 @@ import java.util.Map;
 public class DynamoDBService {
     @Autowired
     private DynamoDBMapper dynamoDBMapper;
-   
-    public List<Map<String, AttributeValue>> scanForTable(String tableName, String value, String column){
-        Map<String, AttributeValue> expressionAttributeValues =
-                new HashMap<String, AttributeValue>();
-        expressionAttributeValues.put(":val", new AttributeValue().withS(value));
 
-        ScanRequest scanRequest = new ScanRequest()
-                .withTableName(tableName)
-                .withFilterExpression(column + "= :val")
-                .withExpressionAttributeValues(expressionAttributeValues);
-        ScanResult result = dynamoDBMapper.scan(scanRequest);
-        return result.getItems();
-    }
 }

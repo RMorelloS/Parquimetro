@@ -33,8 +33,7 @@ public class CondutorController {
     }
 
     @PutMapping("/{id}")
-    public String updateEmployee(@PathVariable("id") String condutor_CPF,
-                                 @RequestBody Condutor condutor){
-        return condutorService.update(condutor_CPF, condutor);
+    public String updateEmployee(@RequestBody Condutor condutor){
+        return condutorService.update(condutor);
     }
 }
