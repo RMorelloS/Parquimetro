@@ -1,11 +1,11 @@
 package com.fiap.postech.fase3.Parquimetro.controller;
 
-import com.fiap.postech.fase3.Parquimetro.model.Estacionamento;
-import com.fiap.postech.fase3.Parquimetro.model.Recibo;
-import com.fiap.postech.fase3.Parquimetro.service.EstacionamentoService;
+import com.fiap.postech.fase3.Parquimetro.model.Condutor;
+import com.fiap.postech.fase3.Parquimetro.model.FormaPagamento;
+import com.fiap.postech.fase3.Parquimetro.service.CondutorService;
+import com.fiap.postech.fase3.Parquimetro.service.FormaPagamentoService;
 import jakarta.validation.Valid;
 import org.apache.catalina.connector.Response;
-import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,32 +13,34 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/estacionar")
-public class EstacionamentoController {
+@RequestMapping("/formaPagamento")
+public class FormaPagamentoController {
 
     @Autowired
-    private EstacionamentoService estacionamentoService;
-    @PostMapping("/iniciar")
-    public ResponseEntity estacionarVeiculo(@Valid @RequestBody Estacionamento estacionamento){
+    FormaPagamentoService formaPagamentoService;
+    @PostMapping("/{condutor_CPF}")
+    public ResponseEntity saveFormaPagamento(@PathVariable String condutor_CPF,
+                                     @Valid @RequestBody FormaPagamento formaPagamento){
         try {
-            this.estacionamentoService.estacionarVeiculo(estacionamento);
+            String retorno = formaPagamentoService.saveFormaPagamento(condutor_CPF, formaPagamento);
+            return new ResponseEntity(retorno, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok("estacionado com sucesso");
+
     }
 
-    @PostMapping("/retirar/{condutor_CPF}/{placa}/{nomeFormaPagamento}")
-    public ResponseEntity retirarVeiculo(@PathVariable String condutor_CPF,
-                                         @PathVariable String placa,
-                                         @PathVariable String nomeFormaPagamento){
-        try{
-            Recibo recibo = this.estacionamentoService.retirarVeiculo(condutor_CPF, placa, nomeFormaPagamento);
-            return ResponseEntity.ok(recibo);
+    @DeleteMapping("/{condutor_CPF}")
+    public ResponseEntity deleteFormaPagamento(@PathVariable String condutor_CPF,
+                                                         @Valid @RequestBody FormaPagamento formaPagamento) {
+        try {
+            var retorno = formaPagamentoService.deletaFormaPagamento(condutor_CPF, formaPagamento);
+            return new ResponseEntity(retorno, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -58,4 +60,5 @@ public class EstacionamentoController {
         body.put("valor", ex.getBindingResult().getFieldError().getRejectedValue());
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
+
 }

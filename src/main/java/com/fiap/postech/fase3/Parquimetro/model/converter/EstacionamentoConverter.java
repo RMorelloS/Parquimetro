@@ -1,4 +1,4 @@
-package com.fiap.postech.fase3.Parquimetro.model;
+package com.fiap.postech.fase3.Parquimetro.model.converter;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 import com.fiap.postech.fase3.Parquimetro.model.Estacionamento;

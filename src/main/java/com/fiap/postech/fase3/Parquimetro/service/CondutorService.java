@@ -3,12 +3,16 @@ package com.fiap.postech.fase3.Parquimetro.service;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import com.fiap.postech.fase3.Parquimetro.model.Condutor;
 import com.fiap.postech.fase3.Parquimetro.repository.CondutorRepository;
+import jakarta.validation.Path;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 @Service
 public class CondutorService {
 
@@ -17,6 +21,7 @@ public class CondutorService {
 
 
     public Condutor save(Condutor condutor) {
+
         try{
             return condutorRepository.save(condutor);
         }catch(Exception e){
@@ -37,12 +42,17 @@ public class CondutorService {
         return condutorRepository.getCondutores();
     }
 
-    public String delete(String condutorCpf) {
+    public String delete(String condutorCpf) throws Exception {
 
+        Condutor condutorBusca = getCondutorById(condutorCpf);
+        if (condutorBusca == null){
+            throw new Exception("Condutor não encontrado!");
+        }
         return condutorRepository.delete(condutorCpf);
     }
 
     public String update(Condutor condutor) {
+
         return condutorRepository.update(condutor);
     }
 
