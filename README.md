@@ -48,3 +48,37 @@ curl --location 'localhost:8080/usuario' \
     "nome": "Ricardo Morello"
 }'
 ```
+
+# 1. Cadastro de condutores
+
+## 1.1 Cadastrar novo condutor
+
+## 1.2 Ler condutor por CPF
+
+## 1.3 Ler todos os condutores
+
+## 1.4 Atualizar um condutor
+
+## 1.5 Excluir um condutor
+
+
+# 2. Cadastro de formas de pagamento
+
+## 2.1 Cadastrar nova forma de pagamento
+
+## 2.2 Excluir forma de pagamento
+
+
+# 3. Estacionamento/Retirada de veículos
+
+## 3.1 Estacionar um veículo
+
+## 2.2 Retirar um veículo
+
+
+# 4. Serviços de notificação via SQS
+
+## 4.1 Horário Fixo
+
+## 4.2 Horário variável
+
