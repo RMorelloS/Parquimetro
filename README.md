@@ -170,6 +170,38 @@ curl --location --request DELETE 'localhost:8080/condutor/92631817052'
 
 ## 2.1 Cadastrar nova forma de pagamento
 
+Para cadastro de uma forma de pagamento, realizar uma requisição do tipo POST, passando informações como apelido do pagamento, número do cartão, CVV, ...:
+
+Importante: caso seja um pagamento via cartão de crédito/débito, as informações referentes ao cartão devem ser preenchidas. Caso seja via PIX, somente a informação de chave pix deverá ser preenchida:
+
+### 2.1.1 Pagamento via cartão de crédito
+
+curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
+--header 'Content-Type: application/json' \
+--data '{
+ "nomeFormaPagamento": "nome-1",
+ "numero_cartao": "12345678",
+ "flag_credito_debito": 1,
+ "data_validade": "2030-10-29T23:36:58.105903983",
+ "cvv": "231",
+ "chave_PIX": null
+}'
+
+### 2.1.2 Pagamento via PIX
+
+```bash
+curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
+--header 'Content-Type: application/json' \
+--data '{
+ "nomeFormaPagamento": "nome-2",
+ "numero_cartao": null,
+ "flag_credito_debito": null,
+ "data_validade": null,
+ "cvv": null,
+ "chave_PIX": "40247194832"
+}'
+```
+
 ## 2.2 Excluir forma de pagamento
 
 
