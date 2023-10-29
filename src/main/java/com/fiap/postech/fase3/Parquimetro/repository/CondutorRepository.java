@@ -64,7 +64,7 @@ public class CondutorRepository {
         PaginatedScanList<Condutor> condutoresAtivos = dynamoDBMapper.scan(Condutor.class, scanExpression);
 
         for (Condutor condutor : condutoresAtivos) {
-            System.out.format("Id=%s", condutor);
+            System.out.format("IdAAAA=%s", condutor);
         }
         return condutoresAtivos;
     }

@@ -6,7 +6,6 @@ import com.fiap.postech.fase3.Parquimetro.repository.CondutorRepository;
 import jakarta.validation.Path;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -56,10 +55,10 @@ public class CondutorService {
         return condutorRepository.update(condutor);
     }
 
-    public Condutor verificaCondutor(String condutorCpf) throws DataIntegrityViolationException {
+    public Condutor verificaCondutor(String condutorCpf) throws Exception {
         Condutor condutorBusca = getCondutorById(condutorCpf);
         if(condutorBusca==null){
-            throw new DataIntegrityViolationException("Condutor " + condutorCpf + " não existe. Realize o cadastro do condutor e tente novamente");
+            throw new Exception("Condutor " + condutorCpf + " não existe. Realize o cadastro do condutor e tente novamente");
         }else{
             return condutorBusca;
         }

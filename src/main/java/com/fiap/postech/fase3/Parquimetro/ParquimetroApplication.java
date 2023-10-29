@@ -3,6 +3,7 @@ package com.fiap.postech.fase3.Parquimetro;
 import com.fiap.postech.fase3.Parquimetro.service.NotificacaoService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
