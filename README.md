@@ -53,13 +53,117 @@ curl --location 'localhost:8080/usuario' \
 
 ## 1.1 Cadastrar novo condutor
 
+Para cadastrar um novo condutor, deve-se realizar uma requisição do tipo POST, passando informações como CPF, nome, rua e outras 4 flags, descritas abaixo:
+
+1. Duração estacionamento: quantidade de horas que o condutor estará estacionado
+2. Flag tempo fixo/hora: flag que indica se o condutor estacionará por um tempo fixo ou variável
+3. Início do estacionamento: Data/hora de início do estacionamento
+4. Status do estacionamento: se o condutor possui algum veículo estacionado
+
+As flags descritas acima são inicialmente configuradas como null ou 0, sendo preenchidas conforme o condutor estacione um veículo.
+
+```bash
+curl --location '3.142.36.237:8080/condutor' \
+--header 'Content-Type: application/json' \
+--data '{
+    "condutor_CPF": "92631817052",
+    "nome": "Usuário 1",
+    "rua": "Rua 1",
+    "endereco_numero": 20,
+    "cidade": "Cidade 1",
+    "bairro": "Bairro 1",
+    "estado": "Estado 1",
+    "celular": "912345678",
+    "veiculos": [
+        {
+            "placa": "CCC5678",
+            "modelo": "Fiat Marea",
+            "ano": "1998"
+        }
+    ],
+    "duracaoEstacionamento": null,
+    "flagTempoFixoHora": 0,
+    "inicioEstacionamento": null,
+    "statusEstacionamento": 0 
+}'
+```
+
+Caso a informação seja válida, o condutor será criado e as informações serão retornadas em uma resposta 200 - OK:
+
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/c2fb5da6-40e5-4621-9462-a716bc7e964f)
+
+Caso seja inserida alguma informação inválida, a validação retornará um erro:
+
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/1e3905fe-9e78-47be-ad42-9570d72b9d11)
+
 ## 1.2 Ler condutor por CPF
+
+Para leitura de um condutor, deve-se utilizar uma requisição do tipo GET, passando-se o CPF como argumento:
+
+```bash
+curl --location '3.142.36.237:8080/condutor/92631817052'
+```
+
+Caso o CPF seja válido e esteja cadastrado, retorna as informações do condutor:
+
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/8504f190-4ac3-4b6c-8ef0-d14a6c967cba)
+
 
 ## 1.3 Ler todos os condutores
 
+Para leitura de todos os condutores, realizar uma requisição do tipo GET:
+
+```bash
+curl --location '3.142.36.237:8080/condutor'
+```
+
+A requisição retornará todos os condutores cadastrados.
+
 ## 1.4 Atualizar um condutor
 
+Para atualizar um condutor, realizar uma requisição do tipo PUT, passando as informações atualizadas do condutor:
+
+```bash
+curl --location --request PUT '3.142.36.237:8080/condutor/92631817052' \
+--header 'Content-Type: application/json' \
+--data '{
+    "condutor_CPF": "92631817052",
+    "nome": "Usuário 1 - Atualizado",
+    "rua": "Rua 1",
+    "endereco_numero": 20,
+    "cidade": "Cidade 1",
+    "bairro": "Bairro 1",
+    "estado": "Estado 1",
+    "celular": "912345678",
+    "veiculos": [
+        {
+            "placa": "CCC5678",
+            "modelo": "Fiat Marea",
+            "ano": "1998"
+        },
+
+         {
+            "placa": "ABC1234",
+            "modelo": "Renault Kwid",
+            "ano": "2015"
+        }
+
+    ],
+    "duracaoEstacionamento": null,
+    "flagTempoFixoHora": 0,
+    "inicioEstacionamento": null,
+    "statusEstacionamento": 0
+   
+}'
+```
+
 ## 1.5 Excluir um condutor
+
+Para excluir um condutor, realizar uma requisição do tipo DELETE, passando o CPF como argumento:
+
+```bash
+curl --location --request DELETE 'localhost:8080/condutor/92631817052'
+```
 
 
 # 2. Cadastro de formas de pagamento
