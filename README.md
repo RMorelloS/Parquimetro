@@ -176,6 +176,7 @@ Importante: caso seja um pagamento via cartão de crédito/débito, as informaç
 
 ### 2.1.1 Pagamento via cartão de crédito
 
+```bash
 curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
 --header 'Content-Type: application/json' \
 --data '{
@@ -186,6 +187,7 @@ curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
  "cvv": "231",
  "chave_PIX": null
 }'
+```
 
 ### 2.1.2 Pagamento via PIX
 
