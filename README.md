@@ -63,7 +63,7 @@ Para cadastrar um novo condutor, deve-se realizar uma requisição do tipo POST,
 As flags descritas acima são inicialmente configuradas como null ou 0, sendo preenchidas conforme o condutor estacione um veículo.
 
 ```bash
-curl --location '3.142.36.237:8080/condutor' \
+curl --location '3.141.103.105:8080/condutor' \
 --header 'Content-Type: application/json' \
 --data '{
     "condutor_CPF": "92631817052",
@@ -101,7 +101,7 @@ Caso seja inserida alguma informação inválida, a validação retornará um er
 Para leitura de um condutor, deve-se utilizar uma requisição do tipo GET, passando-se o CPF como argumento:
 
 ```bash
-curl --location '3.142.36.237:8080/condutor/92631817052'
+curl --location '3.141.103.105:8080/condutor/92631817052'
 ```
 
 Caso o CPF seja válido e esteja cadastrado, retorna as informações do condutor:
@@ -114,7 +114,7 @@ Caso o CPF seja válido e esteja cadastrado, retorna as informações do conduto
 Para leitura de todos os condutores, realizar uma requisição do tipo GET:
 
 ```bash
-curl --location '3.142.36.237:8080/condutor'
+curl --location '3.141.103.105:8080/condutor'
 ```
 
 A requisição retornará todos os condutores cadastrados.
@@ -124,7 +124,7 @@ A requisição retornará todos os condutores cadastrados.
 Para atualizar um condutor, realizar uma requisição do tipo PUT, passando as informações atualizadas do condutor:
 
 ```bash
-curl --location --request PUT '3.142.36.237:8080/condutor/92631817052' \
+curl --location --request PUT '3.141.103.105:8080/condutor/92631817052' \
 --header 'Content-Type: application/json' \
 --data '{
     "condutor_CPF": "92631817052",
@@ -177,7 +177,7 @@ Importante: caso seja um pagamento via cartão de crédito/débito, as informaç
 ### 2.1.1 Pagamento via cartão de crédito
 
 ```bash
-curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
+curl --location '3.141.103.105:8080/formaPagamento/92631817052' \
 --header 'Content-Type: application/json' \
 --data '{
  "nomeFormaPagamento": "nome-1",
@@ -192,7 +192,7 @@ curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
 ### 2.1.2 Pagamento via PIX
 
 ```bash
-curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
+curl --location '3.141.103.105:8080/formaPagamento/92631817052' \
 --header 'Content-Type: application/json' \
 --data '{
  "nomeFormaPagamento": "nome-2",
@@ -206,12 +206,52 @@ curl --location '3.142.36.237:8080/formaPagamento/92631817052' \
 
 ## 2.2 Excluir forma de pagamento
 
+Para excluir uma forma de pagamento, realizar uma requisição do tipo DELETE, passando informações como CPF do condutor e apelido da forma de pagamento:
+
+```bash
+
+curl --location --request DELETE '3.141.103.105:8080/formaPagamento/92631817052' \
+--header 'Content-Type: application/json' \
+--data '{
+   "nomeFormaPagamento": "nome-1"
+}'
+
+```
 
 # 3. Estacionamento/Retirada de veículos
 
 ## 3.1 Estacionar um veículo
+Para estacionar um veículo, realizar uma requisição do tipo POST para o serviço de estacionamentos, passando informações como CPF do condutor, placa, duração prevista e se o veículo permanecerá por tempo fixo ou variável:
+```bash
 
-## 2.2 Retirar um veículo
+curl --location '3.141.103.105:8080/estacionar/iniciar' \
+--header 'Content-Type: application/json' \
+--data '{
+    "condutor_CPF": "92631817052",
+    "placa": "ABC1234",
+    "flagTempoFixoHora": 1,
+    "duracaoEstacionamento": 5
+}'
+
+```
+
+Retornará uma mensagem de sucesso, caso tenha sido possível registrar o estacionamento do veículo:
+
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/c38ae86a-84bc-408d-b4db-3b064716ed4a)
+
+Caso o condutor realize um novo estacionamento já tendo um veículo estacionado, o sistema rejeitará a solicitação:
+
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/648faa39-5cc5-4102-9ee4-1eee6ae17f49)
+
+Caso o condutor realize um estacionamento de um veículo que não está registrado para seu CPF, o sistema rejeitará a solicitação:
+
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/7a8b3bae-eb65-4214-a3e5-786f570ed5d6)
+
+
+## 3.2 Retirar um veículo
+
+Para retirar um veículo, 
+
 
 
 # 4. Serviços de notificação via SQS
