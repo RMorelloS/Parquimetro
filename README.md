@@ -36,18 +36,10 @@ Para executar o projeto utilizando Docker:
    1. Executar o projeto via DockerHUB
 
    ```bash
-      docker run -p 8080:8080 -d ricardoms98:parquimetro:0.0.2
+      docker run -p 8080:8080 -d -e ACCESSKEY='AKIAUCNEGZSQBEV4MFQA' -e SECRETKEY='Gli2/1YlhEN3gmwsZ9U1
+rSDsD6J1LjxRCUqu69fB' -e DYNAMODB='dynamodb.us-east-2.amazonaws.com' -e AWSREGION='us-east-2' -e AWSSQSENDPOINT='https://sqs.us-east-2.amazonaws.com/280
+054123680/NotificacaoCondutores.fifo' ricardoms98/parquimetro:0.0.3
    ```
-
-
-```bash
-curl --location 'localhost:8080/usuario' \
---header 'Content-Type: application/json' \
---data '{
-    "loginUsuario": "ricardoms",
-    "nome": "Ricardo Morello"
-}'
-```
 
 # 1. Cadastro de condutores
 
