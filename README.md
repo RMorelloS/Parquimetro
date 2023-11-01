@@ -16,9 +16,9 @@ Foram utilizadas as seguintes tecnologias/técnicas:
  * **Postman** - geração das requisições e validação da API
  * **Docker** - definição de containers e virtualização
  * **SQS** - recebimento de mensagens para notificação ao usuário quando o período de estacionamento está prestes a vencer
- * **EC2 + Auto Scaling Group** - processamento das requisições (EC2) e escalabilidade via execução de outras instâncias quando as demais instâncias estão sobrecarregadas (auto scaling group)
+ * **EC2 + Auto Scaling Group** - processamento das requisições (EC2) e escalabilidade via execução de outras instâncias quando as demais instâncias estão sobrecarregadas (auto scaling group). Todas as instâncias que venham a ser inicializadas são carregadas com a pré-configuração do docker e da execução do container disponível no Docker HUB, utilizando a opção _user data_ do EC2.
 
-Ressalta-se como principal desafio a implantação do pacote JAR no ambiente serverless, que foi resolvida via investigação na documentação da AWS.
+Ressalta-se como principal desafio a implantação do pacote JAR no ambiente serverless, que foi resolvida via investigação da documentação da AWS.
 
 A arquitetura AWS é apresentada no fluxo a seguir:
 
@@ -290,11 +290,20 @@ Retornará uma mensagem em formato JSON, contendo o recibo do estacionamento rea
 }
 ```
 
-#4. Serviços de notificação via SQS
+# 4. Serviços de notificação via SQS
 
-Como serviço de notificação do usuário, 
+Como serviço de notificação do usuário, realizou-se uma interface com o SQS da AWS. O sistema buscará, de forma assíncrona, todos os condutores com estacionamento ativo na base. 
+
+Após levantar os condutores com estacionamento ativo, o serviço de notificação avalia se o condutor está com o período definido prestes a vencer.
+
+Caso esteja próximo do vencimento, o serviço subirá uma notificação no SQS e aumentará uma hora no tempo total do veículo.
+
+Para fins de simulação, a busca de condutores ativos no DynamoDB é realizada a cada 30 minutos. Também, definiu-se o tempo limite para estacionamento para 5 horas. Por fim, definiu-se a tarifa de R$ 10 por hora estacionada.
 
 ## 4.1 Horário Fixo
 
+Caso o condutor tenha optado por realizar um estacionamento na modalidade tempo fixo, o sistema carregará uma mensagem no SQS, notificando-o de que o tempo fixo delimitado está próximo do encerramento. Caso o condutor exceda o tempo definido inicialmente, uma nova hora é computada em seu tempo total. 
+
 ## 4.2 Horário variável
 
+Caso o condutor tenha optado por realizar um estacionamento na modalidade tempo variável, o sistema carregará uma mensagem no SQS, notificando-o de que uma nova hora será acrescentada ao tempo total do veiculo.
