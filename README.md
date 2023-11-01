@@ -22,12 +22,14 @@ Ressalta-se como principal desafio a implantação do pacote JAR no ambiente ser
 
 A arquitetura AWS é apresentada no fluxo a seguir:
 
-![Diagrama-Serviços-AWS](https://github.com/RMorelloS/Parquimetro/assets/32580031/cb1d2be2-6a4e-4b22-a78c-b11b37d2fb60)
+![Diagrama-Serviços-AWS](https://github.com/RMorelloS/Parquimetro/assets/32580031/63e9351e-ec50-4d63-a8f5-a58c09adb074)
 
 
 # Acesso ao serviço:
 
 ## Ambiente Online
+
+Acesso via endpoint HTTP em instância EC2, disponível pelo IP 3.141.103.105
 
 ## Dockerfile
 
@@ -82,11 +84,13 @@ curl --location '3.141.103.105:8080/condutor' \
 
 Caso a informação seja válida, o condutor será criado e as informações serão retornadas em uma resposta 200 - OK:
 
-![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/c2fb5da6-40e5-4621-9462-a716bc7e964f)
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/79d06fc4-310e-42d2-8c5e-0f16ea94e757)
+
 
 Caso seja inserida alguma informação inválida, a validação retornará um erro:
 
-![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/1e3905fe-9e78-47be-ad42-9570d72b9d11)
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/555b7baa-7713-416a-94aa-a8aab2d22b4b)
+
 
 ## 1.2 Ler condutor por CPF
 
@@ -98,8 +102,7 @@ curl --location '3.141.103.105:8080/condutor/92631817052'
 
 Caso o CPF seja válido e esteja cadastrado, retorna as informações do condutor:
 
-![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/8504f190-4ac3-4b6c-8ef0-d14a6c967cba)
-
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/a832dee7-398d-48d5-8648-afc47150a08d)
 
 ## 1.3 Ler todos os condutores
 
@@ -229,24 +232,67 @@ curl --location '3.141.103.105:8080/estacionar/iniciar' \
 
 Retornará uma mensagem de sucesso, caso tenha sido possível registrar o estacionamento do veículo:
 
-![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/c38ae86a-84bc-408d-b4db-3b064716ed4a)
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/fbdfc4c8-303a-454f-958e-a4816b752a74)
 
 Caso o condutor realize um novo estacionamento já tendo um veículo estacionado, o sistema rejeitará a solicitação:
 
-![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/648faa39-5cc5-4102-9ee4-1eee6ae17f49)
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/afde3844-575e-4636-b4c5-22eb30eeb327)
 
 Caso o condutor realize um estacionamento de um veículo que não está registrado para seu CPF, o sistema rejeitará a solicitação:
 
-![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/7a8b3bae-eb65-4214-a3e5-786f570ed5d6)
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/cfc5ddf1-a5d7-4763-8ee1-ca0fe133cff4)
+
 
 
 ## 3.2 Retirar um veículo
 
-Para retirar um veículo, 
+Para retirar um veículo, realizar uma requisição do tipo POST, passando informações como CPF do condutor, placa do veículo e apelido da forma de pagamento selecionada:
 
+```bash
+curl --location '3.141.103.105:8080/estacionar/retirar/92631817052/CCC5678/nome-2' \
+--header 'Content-Type: application/json' \
+--data '{
+    "condutor_CPF": "402471938651-fixo",
+    "placa": "CCC5678",
+    "flagTempoFixoHora": 1,
+    "duracaoEstacionamento": 1
+}'
+```
 
+Retornará uma mensagem em formato JSON, contendo o recibo do estacionamento realizado, com as seguintes informações:
 
-# 4. Serviços de notificação via SQS
+1. CPF do condutor
+2. Informações do veículo
+3. Horário de início
+4. Horário de fim
+5. Forma de pagamento
+6. Valor total
+
+```json
+{
+    "condutor_CPF": "92631817052",
+    "veiculo": {
+        "placa": "CCC5678",
+        "modelo": "Fiat Marea",
+        "ano": "1998"
+    },
+    "horaInicio": "2023-11-01T02:57:23.535308043",
+    "horaFim": "2023-11-01T07:57:23.535308043",
+    "formaPagamento": {
+        "nomeFormaPagamento": "nome-2",
+        "numero_cartao": null,
+        "flag_credito_debito": false,
+        "data_validade": null,
+        "cvv": null,
+        "chave_PIX": "40247194832"
+    },
+    "valorPagamento": 50
+}
+```
+
+#4. Serviços de notificação via SQS
+
+Como serviço de notificação do usuário, 
 
 ## 4.1 Horário Fixo
 
