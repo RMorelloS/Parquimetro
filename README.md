@@ -29,7 +29,7 @@ A arquitetura AWS é apresentada no fluxo a seguir:
 
 ## Ambiente Online
 
-Acesso via endpoint HTTP em instância EC2, disponível pelo [IP da instância](3.141.103.105). Vale ressaltar que o endpoint principal não possui controller associado, sendo necessário buscar um endpoint especifico, como:
+Acesso via endpoint HTTP em instância EC2, disponível pelo [IP da instância](http://3.141.103.105:8080). Vale ressaltar que o endpoint principal não possui controller associado, sendo necessário buscar um endpoint especifico, como:
 
 ```bash
 http://3.141.103.105:8080/condutor
