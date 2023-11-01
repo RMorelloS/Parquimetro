@@ -29,7 +29,7 @@ A arquitetura AWS é apresentada no fluxo a seguir:
 
 ## Ambiente Online
 
-Acesso via endpoint HTTP em instância EC2, disponível pelo IP [a link] 3.141.103.105
+Acesso via endpoint HTTP em instância EC2, disponível pelo IP [a link](3.141.103.105)
 
 ## Dockerfile
 
