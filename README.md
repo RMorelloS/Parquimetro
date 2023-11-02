@@ -22,7 +22,7 @@ Ressalta-se como principal desafio a implantação do pacote JAR no ambiente ser
 
 A arquitetura AWS é apresentada no fluxo a seguir:
 
-![Diagrama-Serviços-AWS](https://github.com/RMorelloS/Parquimetro/assets/32580031/63e9351e-ec50-4d63-a8f5-a58c09adb074)
+![Diagrama-Servicos-AWS-v2](https://github.com/RMorelloS/Parquimetro/assets/32580031/cf834ace-8c3f-4ecf-946c-5a27da5dff4b)
 
 
 # Acesso ao serviço:
