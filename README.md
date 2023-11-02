@@ -304,10 +304,20 @@ Caso esteja próximo do vencimento, o serviço subirá uma notificação no SQS 
 
 Para fins de simulação, a busca de condutores ativos no DynamoDB é realizada a cada 30 minutos. Também, definiu-se o tempo limite para estacionamento para 5 horas. Por fim, definiu-se a tarifa de R$ 10 por hora estacionada.
 
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/34333645-21c0-4a71-8ffc-6b8d62e99c10)
+
+
+
 ## 4.1 Horário Fixo
 
 Caso o condutor tenha optado por realizar um estacionamento na modalidade tempo fixo, o sistema carregará uma mensagem no SQS, notificando-o de que o tempo fixo delimitado está próximo do encerramento. Caso o condutor exceda o tempo definido inicialmente, uma nova hora é computada em seu tempo total. 
 
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/a0e708d9-ec64-4b55-b0e3-14ec4724ff44)
+
+
 ## 4.2 Horário variável
 
 Caso o condutor tenha optado por realizar um estacionamento na modalidade tempo variável, o sistema carregará uma mensagem no SQS, notificando-o de que uma nova hora será acrescentada ao tempo total do veiculo.
+
+![image](https://github.com/RMorelloS/Parquimetro/assets/32580031/657abb25-4bc8-4167-8a5a-964c2b6edd48)
+
